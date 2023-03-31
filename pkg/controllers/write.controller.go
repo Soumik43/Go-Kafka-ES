@@ -28,7 +28,7 @@ func WriteHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	)
 	if err != nil {
-		log.Fatalf("Failed to create Elasticsearch client: %v", err)
+		log.Fatalf("Failed to create Elasticsearch client: %v\n", err)
 	}
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
@@ -41,10 +41,10 @@ func WriteHandler(w http.ResponseWriter, r *http.Request) {
 	for {
 		msg, err := reader.ReadMessage(r.Context())
 		if err != nil {
-			log.Fatalf("Failed to read message: %v", err)
+			log.Fatalf("Failed to read message: %v\n", err)
 		}
 
-		log.Printf("Received message: %s", string(msg.Value))
+		log.Printf("Received message: %s\n", string(msg.Value))
 
 		kafkaMessage := ElasticMessage{
 			Message: string(msg.Value),
@@ -52,7 +52,7 @@ func WriteHandler(w http.ResponseWriter, r *http.Request) {
 
 		var buf bytes.Buffer
 		if err := json.NewEncoder(&buf).Encode(kafkaMessage); err != nil {
-			log.Fatalf("Failed to encode message: %v", err)
+			log.Fatalf("Failed to encode message: %v\n", err)
 		}
 
 		req := esapi.IndexRequest{
@@ -64,15 +64,15 @@ func WriteHandler(w http.ResponseWriter, r *http.Request) {
 
 		res, err := req.Do(r.Context(), es)
 		if err != nil {
-			log.Fatalf("Failed to perform request 1: %v", err)
+			log.Fatalf("Failed to perform request 1: %v\n", err)
 			continue
 		}
 		if res.IsError() {
-			log.Fatalf("Failed to perform request 2: %v", res.String())
+			log.Fatalf("Failed to perform request 2: %v\n", res.String())
 			continue
 		}
 
-		fmt.Printf("Indexed message with ID %d", idIndex)
+		fmt.Printf("Indexed message with ID %d\n", idIndex)
 
 		// Increment index for ID (test)
 		// Logic will fail for concurrent requests (maybe atomic increment is a better solution)

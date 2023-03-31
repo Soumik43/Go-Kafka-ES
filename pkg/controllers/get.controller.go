@@ -11,6 +11,7 @@ import (
 )
 
 func GetHandler(w http.ResponseWriter, r *http.Request) {
+
 	es, err := elasticsearch.NewClient(
 		elasticsearch.Config{
 			Addresses: []string{config.GetConfig("ES_ADDRESS")},

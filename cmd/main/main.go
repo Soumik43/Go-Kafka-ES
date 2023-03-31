@@ -10,6 +10,7 @@ func main() {
 	route.PushRoute()
 	route.WriteRoute()
 	route.GetRoute()
+	route.BatchMessageRoute()
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)
