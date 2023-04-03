@@ -71,6 +71,7 @@ func WriteHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatalf("Failed to perform request 2: %v\n", res.String())
 			continue
 		}
+		res.Body.Close()
 
 		fmt.Printf("Indexed message with ID %d\n", idIndex)
 

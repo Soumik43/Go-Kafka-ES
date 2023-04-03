@@ -40,7 +40,6 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		es.Search.WithTrackTotalHits(true),
 		es.Search.WithPretty(),
 	)
-
 	if err != nil {
 		log.Fatalf("Error getting response: %s", err)
 	}
