@@ -15,7 +15,7 @@ import (
 )
 
 type ElasticMessage struct {
-	Message string
+	Message string `json:"message"`
 }
 
 func WriteHandler(w http.ResponseWriter, r *http.Request) {
