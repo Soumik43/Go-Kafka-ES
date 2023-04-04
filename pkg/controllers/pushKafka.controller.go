@@ -3,6 +3,8 @@ package controller
 import (
 	"net/http"
 
+	config "go-kafka-es/pkg/config"
+
 	"github.com/segmentio/kafka-go"
 )
 
@@ -13,7 +15,7 @@ func PushKafkaHandler(w http.ResponseWriter, r *http.Request) {
 
 	writer := kafka.NewWriter(kafka.WriterConfig{
 		Brokers: []string{"localhost:9092"},
-		Topic:   "myESTopic",
+		Topic:   config.GetConfig("KAFKA_TOPIC"),
 	})
 	defer writer.Close()
 
